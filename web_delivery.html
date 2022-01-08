@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Delivery for Filling Station</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+       
+    </head>
+    <body>
+        <h1>Delivery Items</h1>
+        <div> <button>Create</button></div>
+        <div>
+            <table>
+                <tr>
+                        <th>id</th>
+                        <th>Item</th>
+                        <th>
+                            Type
+                        </th>
+						<th>Quantity</th>
+                        <th>TotPrice</th>
+
+                </tr>
+                
+            </table>
+        </div>
+        <div id='createUpdateForm' style="display: none">
+                <h2><span id="createLabel">Create an Item</span> <span id="updateLabel">Update an Item</span> Item</h2>
+                <input type="hidden" name="id"/>
+                Item <input type="text" name="Item" /><br/>
+                Type <input type="text" name="Type"/> <br/>
+				Quantity <input type="number" name="Quantity"/> <br/>
+                TotPrice <input type="number" name="TotPrice"/> <br/>
+        </div>
+    </body>
+   
+</html>
+
+
