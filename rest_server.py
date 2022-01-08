@@ -50,7 +50,7 @@ def create():
 #Update
 # Sample curl command for Update function: curl -X PUT -H "content-type:application/json" -d "{\"New\":\"test\",\"Price\":999}" http://127.0.0.1:5000/books/1
 @app.route('/books/<int:id>', methods=['PUT'])
-def update(id):
+def showUpdate(id):
     foundBooks = list(filter (lambda t : t["id"]== id, books))
     print(foundBooks)
     if len(foundBooks) == 0:

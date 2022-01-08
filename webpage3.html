@@ -8,9 +8,9 @@
 </head>
 
 <body>
-	<div id="create-update" style="display:none">
+	<div id="create-edit" style="display:none">
 		<h2>create-edit</h2>
-		<table id="createUpdateForm">
+		<table>
 			<tr>
 				<td>ISBN</td>
 				<td><input type="text" name="ISBN"></td>
@@ -26,74 +26,29 @@
 			<tr>
 				<td>price</td>
 				<td><input type="currency" name="price"></td>
-				<td></td><td><button id="create-edit-button" onclick="doCreate()">Create</button></td>
+				<td></td><td><button id="create-edit-button">go</button></td>
 			</tr>
 		</table>
 	</div>
 	<div id="display">
 		<h2>Books</h2>
-		<button onclick="showCreate()">create</button>
 		<table id="bookTable" class="table">
 			<tr>
 				<th>ISBN</th><th>title</th><th>author</th><th>price</th><th></th><th></th>
 			</tr>
-
+			<tr id="123">
+				<td>123</td>
+				<td>cooking for us</td>
+				<td>jamie oliver</td>
+				<td>333</td>
+				<td><button onclick="showUpdate(this)">Update</button></td>
+				<td><button onclick="doDelete(this)">Delete</button><td>
+			</tr>
 		</table>
 		
 	</div>
 
 	<script>
-		function showCreate(){
-		console.log("in doCreate")
-			document.getElementById('display').style.display="none"
-			document.getElementById('create-update').style.display="block"
-		}
-		
-		function showDisplay(){
-			document.getElementById('display').style.display="block"
-			document.getElementById('create-update').style.display="none"
-		}
-		
-		function doCreate(){
-			console.log("in doCreate")
-			book = getBookFromForm()
-			console.log(book)
-			$.ajax({
-				url:"/books",
-				data:JSON.stringify(book),
-				method:"POST",
-				dataType:"JSON",
-				contentType:"application/json; charset=uft-8"
-				success:function(result){
-					console.log(result)
-					addBookToTable(book)
-					showDisplay()
-				},
-				error:function(xhr,status,error){
-					console.log("error"+error)
-				}
-			})
-			//showDisplay()
-		}
-		
-		function doDelete(thisElem)
-			var tableElement = document.getElementById('bookTable');
-			var rowElement = r.parentNode.parentNode;
-			var index = rowElement.rowIndex;
-			deleteBookAjax(rowElement.getAttribute("id"));
-			tableElement.deleteRow(index);
-		
-		function getBookFromForm(){	
-			var form = document.getElementById('createUpdateForm')
-			var book = {}
-			book.ISBN = form.querySelector('input[name="ISBN"]').value
-			book.title = form.querySelector('input[name="ISBN"]').value
-			book.author = form.querySelector('input[name="ISBN"]').value
-			book.price = form.querySelector('input[name="ISBN"]').value
-			console.log(book)
-			 return book
-			}
-	
 		function populateTable(){
 		// Ajax call to surver to getAll books
 		//	book={
