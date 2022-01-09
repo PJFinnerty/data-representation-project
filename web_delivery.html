@@ -5,10 +5,11 @@
        
     </head>
     <body>
+	<! Form used on opening screen-includes current records in database and a create button to add a new record>
         <h1>Delivery Items</h1>
-        <div> <button>Create</button></div>
+        <div> <button id="displayCreateButton" onclick="showCreate()">Create</button></div>
         <div>
-            <table>
+            <table class="table" id="itemsListed">
                 <tr>
                         <th>id</th>
                         <th>Item</th>
@@ -17,21 +18,113 @@
                         </th>
 						<th>Quantity</th>
                         <th>TotPrice</th>
-
-                </tr>
-                
+                        <th>Update</th>
+                        <th>Delete</th>
+                </tr>  
             </table>
         </div>
+		
+		<! Form that is shown when 'create' button is clicked-includes fields for each feature except id and a 'Create item' button>
+		<! Span used for inline elements>
         <div id='createUpdateForm' style="display: none">
-                <h2><span id="createLabel">Create an Item</span> <span id="updateLabel">Update an Item</span> Item</h2>
+				<! Button that leads from homescreen to create form>
+                <h2><span id="createLabel">Create an Item</span>
+				<! Button that leads from homescreen to update form>
+				<span id="updateLabel">update an Item</span> Product</h2>
                 <input type="hidden" name="id"/>
                 Item <input type="text" name="Item" /><br/>
                 Type <input type="text" name="Type"/> <br/>
 				Quantity <input type="number" name="Quantity"/> <br/>
                 TotPrice <input type="number" name="TotPrice"/> <br/>
+				<! 
+                <span><button id="doCreateButton" onclick="doCreate()">Create an Item</button></span>
+                <span><button id="doUpdateButton" onclick="doUpdate()">Update an Item</button></span>
         </div>
     </body>
-   
+    
+	<script>
+	//  View all 
+	function viewAll(){
+        document.getElementById('displayCreateButton').style.display="block"
+        document.getElementById('itemsListed').style.display="block"
+        document.getElementById('createUpdateForm').style.display="none"
+	}
+	
+	function showCreate(){
+        document.getElementById('displayCreateButton').style.display="none"
+        document.getElementById('itemsListed').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+
+        document.getElementById('createLabel').style.display="inline"
+        document.getElementById('updateLabel').style.display="none"
+
+        document.getElementById('doCreateButton').style.display="block"
+        document.getElementById('doUpdateButton').style.display="none"
+
+    }
+	
+	function doCreate(){
+		// Get elements from create form
+        var form = document.getElementById('createUpdateForm')
+		// Assign inputs to dict and extract values using querySelector()
+        var Product = {}
+        Product.Item = form.querySelector('input[name="Item"]').value
+        Product.Type = form.querySelector('input[name="Type"]').value
+		Product.Quantity = form.querySelector('input[name="Quantity"]').value
+        Product.TotPrice = form.querySelector('input[name="TotPrice"]').value
+		// Print JSON to console and pass to AJAX call
+        console.log(JSON.stringify(Product))
+        createProductAjax(Product)
+	}
+	
+	function createProductAjax(Product){
+        console.log(JSON.stringify(Product));
+		// Ajax cod for create (POST), set type to JSON
+        $.ajax({
+            "url": "http://127.0.0.1:5000/delivery",
+            "method":"POST",
+            "data":JSON.stringify(Product),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            // If successful, pass JSON element to 'addProductToTable()
+			"success":function(result){
+                //console.log(result);
+                Product.id = result.id
+                addProductToTable(Product)
+				// Clear the form and call viewAll to return to home
+                clearForm()
+                viewAll()
+            },
+			// Create a function when unsuccessful - create error message
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+	// Create function to add inputs to main table
+	function addProductToTable(Product){
+		// Create variable for each input from create/update forms 
+        var tableElement = document.getElementById('itemsListed')
+        var rowElement = tableElement.insertRow(-1)
+        rowElement.setAttribute('id',Product.id)
+		// Insert the id value from input
+        var cell1 = rowElement.insertCell(0);
+        cell1.innerHTML = Product.id
+		// Item 
+        var cell2 = rowElement.insertCell(1);
+        cell2.innerHTML = Product.Item
+		// Type
+        var cell3 = rowElement.insertCell(2);
+        cell3.innerHTML = Product.Type
+		// Quanity
+		var cell4 = rowElement.insertCell(3);
+        cell4.innerHTML = Product.Quantity
+		// TotPrice
+		var cell5 = rowElement.insertCell(4);
+        cell5.innerHTML = Product.TotPrice 
+     	
+    }
+	</script>
 </html>
 
 
