@@ -50,6 +50,24 @@
         document.getElementById('createUpdateForm').style.display="none"
 	}
 	
+	function getAllAjax(){
+        $.ajax({
+            "url": "http://127.0.0.1:5000/delivery",
+            "method":"GET",
+            "data":"",
+            "dataType": "JSON",
+            "success":function(result){
+                for (Product of result){
+                    addProductToTable(Product);
+                }
+                
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+	}
+	
 	function showCreate(){
         document.getElementById('displayCreateButton').style.display="none"
         document.getElementById('itemsListed').style.display="none"
@@ -60,7 +78,6 @@
 
         document.getElementById('doCreateButton').style.display="block"
         document.getElementById('doUpdateButton').style.display="none"
-
     }
 	
 	function doCreate(){
@@ -101,6 +118,54 @@
             }
         });
     }
+	
+	function showUpdate(buttonElement){
+        document.getElementById('displayCreateButton').style.display="none"
+        document.getElementById('itemsListed').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+
+        document.getElementById('createLabel').style.display="none"
+        document.getElementById('updateLabel').style.display="inline"
+
+        document.getElementById('doCreateButton').style.display="none"
+        document.getElementById('doUpdateButton').style.display="block"
+        var rowElement = buttonElement.parentNode.parentNode
+	}
+        
+	function doUpdate(){
+        var Product = getProductFromForm();
+        var rowElement = document.getElementById(Product.id);
+        updateProductAjax(Product);
+        setProductInRow(rowElement,Product);
+        clearForm();
+        viewAll();
+    }	
+	
+	function setProductInRow(rowElement, Product){
+        rowElement.cells[0].firstChild.textContent= Product.id  
+        rowElement.cells[1].firstChild.textContent= Product.Item 
+        rowElement.cells[2].firstChild.textContent= Product.Type
+		rowElement.cells[3].firstChild.textContent= Product.Quantity
+        rowElement.cells[4].firstChild.textContent= Product.TotPrice
+	}	
+		
+	function updateProductAjax(Product){
+        console.log(JSON.stringify(Product));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/delivery/"+encodeURI(Product.id),
+            "method":"PUT",
+            "data":JSON.stringify(Product),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+                  
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+	
 	// Create function to add inputs to main table
 	function addProductToTable(Product){
 		// Create variable for each input from create/update forms 
@@ -122,8 +187,20 @@
 		// TotPrice
 		var cell5 = rowElement.insertCell(4);
         cell5.innerHTML = Product.TotPrice 
-     	
+		// Pass in buttons to update and delete 
+     	var cell6 = rowElement.insertCell(5);
+        cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
     }
+	
+	function clearForm(){
+        var form = document.getElementById('createUpdateForm')
+
+        form.querySelector('input[name="Item"]').value=''
+        form.querySelector('input[name="Type"]').value=''
+		form.querySelector('input[name="Quantity"]').value=''
+        form.querySelector('input[name="TotPrice"]').value=''
+    }
+	
 	</script>
 </html>
 
