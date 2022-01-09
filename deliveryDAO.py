@@ -10,7 +10,7 @@ class DeliveryDAO:
         database="delivery"
         )
   
-        def findAll(self):
+    def findAll(self):
         cursor = self.db.cursor()
         sql="select * from delivery"
         cursor.execute(sql)
@@ -50,16 +50,13 @@ class DeliveryDAO:
         cursor = self.db.cursor()
         sql="delete from delivery where id = %s"
         values = (id,)
-
         cursor.execute(sql, values)
-
         self.db.commit()
         print("delete done")
 
     def convertToDict(self, result):
         colnames=['id','Item','Type', 'Quantity',"TotPrice"]
-        item = {}
-        
+        item = {}      
         if result:
             for i, colName in enumerate(colnames):
                 value = result[i]
