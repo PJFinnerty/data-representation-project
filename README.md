@@ -54,3 +54,8 @@ The following softwares must be installed for this repository to work:
 
 1. 'What is a REST API', Red Hat, May 2021, https://www.redhat.com/en/topics/api/what-is-a-rest-api
 
+2. 'How to Create a Table in MySQL', W3schools, https://www.w3schools.com/sql/sql_create_table.asp
+
+3. 'EncodeURI', MDN webdocs, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI
+
+4. 
