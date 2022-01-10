@@ -14,12 +14,15 @@ The intention is to demonstrate an understanding of web-interface architecture. 
 
 The below files are found in this project:
 
-1. deliveryDAO.py - python file featuring the functions that contain the SQL commands
-2. LICENCE - the licence for this repository
-3. README - this file, outlining the project intention
-2. requirements.txt - a text file containing the libraries that are required to run this project
-3. server_delivery.py - python file that features a REST API and contains the code to run the FLASK server
-4. web_delivery.html - the webpage file that allows the browser to interact with the server
+1. deliveryDAO.py - python file that uses MYSQL.connetor to SQL commands to the server
+2. server_delivery.py - python file that uses FLASK and request to route the DAO commands to the FLASK server and interacts with the database
+3. web_delivery.html - the webpage file that allows the browser to interact with the server
+4. README - this file, outlining the project intention
+5. requirements.txt - a text file containing the libraries that are required to run this project
+6. LICENCE - the licence for this repository
+7. dbconfig.py - the configuration file containing details for mysql database connection
+8. delivery_table.sql - the SQL file containing the create and insert commands for the delivery table
+9. .gitignore - the file containing the files that git should ignore when committing
 
 
 ## Installation

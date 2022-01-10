@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Delivery for Filling Station</title>
+        <title>Delivery for Filling Station</title><br>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
        
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body>
-        <h1>Delivery Items</h1>
-        <div> <button id="displayCreateButton" onclick="showCreate()">Create</button></div>
+        <h1>Delivery Items</h1><br>
+        <div> <button id="displayCreateButton" onclick="showCreate()">Order new Item</button></div><br>
         <div>
             <table class="table" id="itemsListed">
                 <tr>
@@ -28,7 +29,7 @@
 		<! Span used for inline elements>
         <div id='createUpdateForm' style="display: none">
 				<! Button that leads from homescreen to create form>
-                <h2><span id="createLabel">Create an Item</span> 
+                <h2><span id="createLabel">Order a </span> 
 				<! Button that leads from homescreen to update form>
 				<span id="updateLabel">update an Item</span> Product</h2>
                 <input type="hidden" name="id"/>
@@ -50,8 +51,9 @@
     }
 	
 	function getAllAjax(){
+		host = window.location.origin
         $.ajax({
-            "url": "http://127.0.0.1:5000/delivery",
+            "url": host+"/delivery",
             "method":"GET",
             "data":"",
             "dataType": "JSON",
@@ -97,8 +99,9 @@
 	function createProductAjax(Product){
         console.log(JSON.stringify(Product));
 		// Ajax cod for create (POST), set type to JSON
+		host = window.location.origin
         $.ajax({
-            "url": "http://127.0.0.1:5000/delivery",
+            "url": host+"/delivery",
             "method":"POST",
             "data":JSON.stringify(Product),
             "dataType": "JSON",
@@ -144,10 +147,10 @@
     }
 	
 	function updateProductAjax(Product){
-        //var car = {"reg":"12 D 1234","TotPrice":8000}
         console.log(JSON.stringify(Product));
+		host = window.location.origin
         $.ajax({
-            "url": "http://127.0.0.1:5000/delivery/"+encodeURI(Product.id),
+            "url": host+"/delivery/"+encodeURI(Product.id),
             "method":"PUT",
             "data":JSON.stringify(Product),
             "dataType": "JSON",
@@ -171,8 +174,9 @@
     }
 	
 	function deleteProductAjax(id){
+		host = window.location.origin
         $.ajax({
-            "url": "http://127.0.0.1:5000/delivery/"+encodeURI(id),
+            "url": host+"/delivery/"+encodeURI(id),
             "method":"DELETE",
             "data":"",
             "dataType": "JSON",
@@ -266,8 +270,6 @@
     }
     
     getAllAjax();
-  
-
-    
+     
     </script>
 </html>
